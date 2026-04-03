@@ -1,0 +1,46 @@
+:root {
+  --ui-background: 248 250 252;
+  --ui-foreground: 15 23 42;
+  --ui-surface: 255 255 255;
+  --ui-surface-strong: 241 245 249;
+  --ui-muted: 226 232 240;
+  --ui-muted-foreground: 71 85 105;
+  --ui-border: 203 213 225;
+  --ui-primary: 14 116 144;
+  --ui-primary-foreground: 240 249 255;
+  --ui-accent: 245 158 11;
+  --ui-accent-foreground: 17 24 39;
+  --ui-success: 22 163 74;
+  --ui-success-foreground: 240 253 244;
+  --ui-danger: 220 38 38;
+  --ui-danger-foreground: 254 242 242;
+  --ui-ring: 6 182 212;
+  --ui-radius: 1rem;
+}
+
+.theme-dark,
+[data-theme="dark"] {
+  --ui-background: 2 6 23;
+  --ui-foreground: 226 232 240;
+  --ui-surface: 15 23 42;
+  --ui-surface-strong: 30 41 59;
+  --ui-muted: 51 65 85;
+  --ui-muted-foreground: 148 163 184;
+  --ui-border: 71 85 105;
+  --ui-primary: 34 211 238;
+  --ui-primary-foreground: 8 47 73;
+  --ui-accent: 251 191 36;
+  --ui-accent-foreground: 31 41 55;
+  --ui-success: 74 222 128;
+  --ui-success-foreground: 20 83 45;
+  --ui-danger: 248 113 113;
+  --ui-danger-foreground: 69 10 10;
+  --ui-ring: 103 232 249;
+}
+
+html,
+body {
+  background: rgb(var(--ui-background));
+  color: rgb(var(--ui-foreground));
+}
+

@@ -1,0 +1,44 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  * {
+    @apply border-[rgb(var(--ui-border))];
+  }
+
+  body {
+    @apply min-h-screen bg-[rgb(var(--ui-background))] text-[rgb(var(--ui-foreground))] antialiased;
+  }
+
+  a {
+    @apply text-[rgb(var(--ui-primary))];
+  }
+}
+
+@layer components {
+  .ui-shell {
+    @apply mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8;
+  }
+
+  .ui-page-grid {
+    @apply grid gap-8;
+  }
+
+  .ui-card-grid {
+    @apply grid gap-4 lg:grid-cols-2;
+  }
+
+  .ui-demo-card {
+    @apply rounded-[calc(var(--ui-radius)*1)] border bg-[rgb(var(--ui-surface))] p-6 shadow-sm;
+  }
+
+  .ui-section-title {
+    @apply text-2xl font-semibold tracking-tight;
+  }
+
+  .ui-kicker {
+    @apply text-sm font-medium uppercase tracking-[0.2em] text-[rgb(var(--ui-muted-foreground))];
+  }
+}
+

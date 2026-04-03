@@ -1,0 +1,24 @@
+{
+  "name": "gui",
+  "version": "1.0.0",
+  "main": "index.js",
+  "directories": {
+    "example": "examples"
+  },
+  "scripts": {
+    "build:css": "npx tailwindcss -c tailwind.config.js -i ./assets/ui.css -o ./examples/showcase/static/ui.css --minify",
+    "test": "go test ./...",
+    "test:e2e": "npx playwright test"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "devDependencies": {
+    "@playwright/test": "^1.59.1",
+    "tailwindcss": "^3.4.17"
+  },
+  "dependencies": {
+    "htmx.org": "^2.0.8"
+  }
+}
