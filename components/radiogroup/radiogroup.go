@@ -1,6 +1,8 @@
 package radiogroup
 
 import (
+	"fmt"
+
 	g "maragu.dev/gomponents"
 	h "maragu.dev/gomponents/html"
 
@@ -36,12 +38,16 @@ type Props struct {
 // RadioGroup renders a fieldset of mutually exclusive options.
 func RadioGroup(p Props) g.Node {
 	items := make([]g.Node, 0, len(p.Options)+1)
+	groupID := p.ID
+	if groupID == "" {
+		groupID = a11y.InstanceID("radiogroup", "", p.Name, p.Legend, p.DataTestID)
+	}
 	if p.Legend != "" {
 		items = append(items, h.Legend(h.Class("mb-2 text-sm font-medium"), g.Text(p.Legend)))
 	}
 
-	for _, option := range p.Options {
-		optionID := a11y.ID("radio", "", p.Name, option.Value, option.Label)
+	for i, option := range p.Options {
+		optionID := fmt.Sprintf("%s-option-%d", groupID, i+1)
 		input := h.Input(render.Attrs(
 			optionID,
 			tw.Join("mt-1 h-4 w-4 border text-[rgb(var(--ui-primary))] focus:outline-none focus-visible:ring-2 focus-visible:ring-[rgb(var(--ui-ring))]"),

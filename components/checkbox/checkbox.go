@@ -28,7 +28,7 @@ type Props struct {
 
 // Checkbox renders a checkbox control with optional inline content.
 func Checkbox(p Props, children ...g.Node) g.Node {
-	id := a11y.ID("checkbox", p.ID, p.Name, p.Label, p.DataTestID)
+	id := a11y.InstanceID("checkbox", p.ID, p.Name, p.Label, p.DataTestID)
 	labelContent := children
 	if len(labelContent) == 0 && p.Label != "" {
 		labelContent = []g.Node{g.Text(p.Label)}

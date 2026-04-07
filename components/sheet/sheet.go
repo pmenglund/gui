@@ -24,7 +24,7 @@ type Props struct {
 
 // Sheet renders a side panel overlay and its trigger content.
 func Sheet(p Props, children ...g.Node) g.Node {
-	id := a11y.ID("sheet", p.ID, p.Title, p.DataTestID)
+	id := a11y.InstanceID("sheet", p.ID, p.Title, p.DataTestID)
 	titleID := id + "-title"
 	descID := id + "-description"
 	trigger := p.Trigger

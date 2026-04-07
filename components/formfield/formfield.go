@@ -34,7 +34,7 @@ type Props struct {
 
 // FormField renders a labeled form control with optional description and error text.
 func FormField(p Props, children ...g.Node) g.Node {
-	controlID := a11y.ID("field", p.ID, p.Label, p.DataTestID)
+	controlID := a11y.InstanceID("field", p.ID, p.Label, p.DataTestID)
 	descriptionID := ""
 	errorID := ""
 	if p.Description != "" {

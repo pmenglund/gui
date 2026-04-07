@@ -103,6 +103,7 @@ func FormWorkflowExample() g.Node {
 			),
 			sectionCard("Deployment request", "FormField coordinates common field wiring, while the custom ticket block shows direct use of label, helper text, and error text.",
 				formfield.FormField(formfield.Props{
+					ID:          "form-workflow-service-name",
 					Label:       "Service name",
 					Description: "Shown in Slack notifications and the deployment feed.",
 					Required:    true,
@@ -116,6 +117,7 @@ func FormWorkflowExample() g.Node {
 					},
 				}),
 				formfield.FormField(formfield.Props{
+					ID:          "form-workflow-deployment-notes",
 					Label:       "Deployment notes",
 					Description: "Summarize the blast radius, rollback steps, and what changed.",
 					Builder: func(ids formfield.IDs) g.Node {
@@ -131,16 +133,19 @@ func FormWorkflowExample() g.Node {
 			),
 			sectionCard("Review settings", "These controls are rendered directly so tests can prove individual component behavior without relying only on composed wrappers.",
 				checkbox.Checkbox(checkbox.Props{
+					ID:      "form-workflow-announce",
 					Name:    "announce",
 					Label:   "Post an announcement to #deployments when this ships",
 					Checked: true,
 				}),
 				switchui.Switch(switchui.Props{
+					ID:      "form-workflow-canary",
 					Name:    "canary",
 					Label:   "Start in canary mode",
 					Checked: true,
 				}),
 				radiogroup.RadioGroup(radiogroup.Props{
+					ID:     "form-workflow-approval",
 					Name:   "approval",
 					Legend: "Approval path",
 					Value:  "peer-review",
@@ -150,6 +155,7 @@ func FormWorkflowExample() g.Node {
 					},
 				}),
 				formfield.FormField(formfield.Props{
+					ID:          "form-workflow-window",
 					Label:       "Deployment window",
 					Description: "Pick the window that matches the primary on-call rotation.",
 					Builder: func(ids formfield.IDs) g.Node {
@@ -189,6 +195,7 @@ func RuntimeWorkbenchExample() g.Node {
 	})
 
 	dialogExample := dialog.Dialog(dialog.Props{
+		ID:          "runtime-workbench-dialog",
 		Title:       "Approve rollout",
 		Description: "The dialog stays testable because all behavior is attached through data attributes on server-rendered markup.",
 		Trigger:     button.Button(button.Props{}, g.Text("Open approval dialog")),
@@ -196,6 +203,7 @@ func RuntimeWorkbenchExample() g.Node {
 	}, h.P(g.Text("Confirm the canary has remained healthy for five minutes before promoting the release.")))
 
 	sheetExample := sheet.Sheet(sheet.Props{
+		ID:          "runtime-workbench-sheet",
 		Title:       "Operator notes",
 		Description: "The sheet is useful for secondary details that should not crowd the main grid.",
 		Trigger:     button.Button(button.Props{Variant: button.VariantOutline}, g.Text("Open operator sheet")),
@@ -220,6 +228,7 @@ func RuntimeWorkbenchExample() g.Node {
 	})
 
 	tabExample := tabs.Tabs(tabs.Props{
+		ID: "runtime-workbench-tabs",
 		Items: []tabs.Item{
 			{Key: "overview", Label: "Overview", Panel: h.P(g.Text("The overview panel highlights the steady-state health of the rollout."))},
 			{Key: "activity", Label: "Activity", Panel: h.P(g.Text("Keyboard arrow keys move focus between tabs without a client-side framework."))},
