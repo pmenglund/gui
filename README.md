@@ -69,6 +69,8 @@ The showcase serves:
 - `/forms` for form composition
 - `/interactive` for dialog, dropdown, toast, and sheet
 - `/htmx` for partial-update patterns
+- `/examples/form-workflow` for a realistic, testable release request flow
+- `/examples/runtime-workbench` for a testable runtime control surface
 
 ## Validation
 
