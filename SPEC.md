@@ -75,7 +75,7 @@ Important boundary:
 
 5. **Escape hatches without chaos**
    - Every component should expose controlled extensibility via `Class`, `Attributes`, slot content, and composition.
-   - Escape hatches should not undermine accessibility or core layout invariants.
+   - Escape hatches should not undermine accessibility, runtime hooks, or core layout invariants.
 
 6. **Composable over magical**
    - Prefer explicit props and subcomponents over hidden global behavior.
@@ -239,7 +239,7 @@ Fields:
 - Variant and size values must be lowercase string constants.
 - Unknown variant or size values must resolve to documented defaults rather than silently breaking output.
 - `Class` values are appended after internal classes so consumers can extend or override when necessary.
-- `Attributes` are appended last unless a component documents a stronger precedence rule for safety.
+- `Attributes` are preserved only for non-conflicting additions. Component-managed attributes keep precedence, and reserved runtime hooks such as `data-ui-*` must not be replaceable through raw passthrough.
 - Components should generate deterministic IDs only when the caller does not provide an `ID` and deterministic generation is needed for accessibility relationships.
 
 ## 6. Public API Specification
@@ -266,9 +266,11 @@ Each component props type should follow these conventions:
 - use explicit Go fields instead of `map[string]any`
 - use enum-like custom string types for `Variant`, `Size`, and similar constrained values
 - reserve `Class` for utility-class overrides
-- reserve `Attributes` for arbitrary HTML attrs and `data-*` hooks
+- reserve `Attributes` for arbitrary non-conflicting HTML attrs and custom `data-*` hooks outside reserved namespaces
 - prefer booleans for binary behavior flags
 - prefer dedicated slot props over magic child indexing when structure matters
+
+Callers should prefer typed props such as `HTMX`, `Open`, `Disabled`, `Required`, `Invalid`, `Type`, and `Class` instead of trying to restate those semantics through raw attributes.
 
 Example:
 
@@ -363,6 +365,8 @@ Consumers must be able to customize components without forking by using:
 - `Class`
 - `Attributes`
 - wrapper components in their own app code
+
+`Class` is the styling override mechanism. `Attributes` is a safe extension mechanism for extra non-conflicting attributes such as `title`, `lang`, `dir`, or custom `data-*` hooks outside reserved namespaces. Consumers must not rely on `Attributes` to replace component-managed semantics, accessibility wiring, HTMX attrs emitted from typed props, or delegated runtime hooks in the `data-ui-*` namespace.
 
 Consumers should not be expected to depend on internal class names or DOM nesting beyond what the documentation marks as stable.
 
