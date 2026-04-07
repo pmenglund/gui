@@ -24,6 +24,7 @@ type Props struct {
 	HTMX        public.Props
 }
 
+// Dialog renders a modal dialog shell and its trigger content.
 func Dialog(p Props, children ...g.Node) g.Node {
 	id := a11y.ID("dialog", p.ID, p.Title, p.DataTestID)
 	titleID := id + "-title"

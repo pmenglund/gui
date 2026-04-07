@@ -59,6 +59,7 @@ var recipe = tw.Recipe{
 	},
 }
 
+// Button renders a button element with the provided styling and content.
 func Button(p Props, children ...g.Node) g.Node {
 	buttonType := p.Type
 	if buttonType == "" {

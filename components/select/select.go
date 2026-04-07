@@ -31,6 +31,7 @@ type Props struct {
 	HTMX        public.Props
 }
 
+// Select renders a native select element with the provided options.
 func Select(p Props) g.Node {
 	children := make([]g.Node, 0, len(p.Options)+1)
 	if p.Placeholder != "" {

@@ -26,6 +26,7 @@ type Props struct {
 	HTMX         public.Props
 }
 
+// Input renders a single-line text input with the provided attributes.
 func Input(p Props) g.Node {
 	inputType := p.Type
 	if inputType == "" {

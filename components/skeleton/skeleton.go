@@ -22,6 +22,7 @@ type Props struct {
 	Count      int
 }
 
+// Skeleton renders a loading placeholder block.
 func Skeleton(p Props) g.Node {
 	count := p.Count
 	if count == 0 {

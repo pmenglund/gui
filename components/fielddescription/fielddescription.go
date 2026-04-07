@@ -16,6 +16,7 @@ type Props struct {
 	DataTestID string
 }
 
+// FieldDescription renders helper text associated with a form field.
 func FieldDescription(p Props, children ...g.Node) g.Node {
 	return h.P(append(
 		render.Attrs(

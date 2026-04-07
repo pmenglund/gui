@@ -29,6 +29,7 @@ type Props struct {
 	HTMX       public.Props
 }
 
+// Table renders tabular data from the provided columns and rows.
 func Table(p Props) g.Node {
 	headers := make([]g.Node, 0, len(p.Columns))
 	for _, column := range p.Columns {

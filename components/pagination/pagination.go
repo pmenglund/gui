@@ -26,6 +26,7 @@ type Props struct {
 	Items      []Item
 }
 
+// Pagination renders page navigation controls from the provided items.
 func Pagination(p Props) g.Node {
 	nodes := make([]g.Node, 0, len(p.Items))
 	for _, item := range p.Items {

@@ -28,6 +28,7 @@ type Props struct {
 	HTMX       public.Props
 }
 
+// DropdownMenu renders a trigger and popover menu for the provided items.
 func DropdownMenu(p Props) g.Node {
 	trigger := p.Trigger
 	if trigger == nil {

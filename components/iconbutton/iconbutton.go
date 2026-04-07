@@ -22,6 +22,7 @@ type Props struct {
 	HTMX       public.Props
 }
 
+// IconButton renders a button optimized for icon-only content.
 func IconButton(p Props, children ...g.Node) g.Node {
 	icon := p.Icon
 	if len(children) > 0 {

@@ -16,6 +16,7 @@ type Props struct {
 	DataTestID string
 }
 
+// FieldError renders an inline validation message for a form field.
 func FieldError(p Props, children ...g.Node) g.Node {
 	return h.P(append(
 		render.Attrs(

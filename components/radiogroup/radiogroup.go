@@ -33,6 +33,7 @@ type Props struct {
 	HTMX        public.Props
 }
 
+// RadioGroup renders a fieldset of mutually exclusive options.
 func RadioGroup(p Props) g.Node {
 	items := make([]g.Node, 0, len(p.Options)+1)
 	if p.Legend != "" {

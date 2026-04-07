@@ -23,6 +23,7 @@ type Props struct {
 	HTMX       public.Props
 }
 
+// Switch renders a binary toggle control with optional inline content.
 func Switch(p Props, children ...g.Node) g.Node {
 	id := a11y.ID("switch", p.ID, p.Name, p.Label, p.DataTestID)
 	labelContent := children

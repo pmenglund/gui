@@ -27,6 +27,7 @@ type Props struct {
 	HTMX        public.Props
 }
 
+// Textarea renders a multi-line text input with the provided attributes.
 func Textarea(p Props) g.Node {
 	rows := p.Rows
 	if rows == 0 {

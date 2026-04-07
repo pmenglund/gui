@@ -26,6 +26,7 @@ type Props struct {
 	Variant    Variant
 }
 
+// Badge renders a compact status label with the provided content.
 func Badge(p Props, children ...g.Node) g.Node {
 	variant := map[Variant]string{
 		VariantDefault: "border-[rgb(var(--ui-primary))] bg-[rgb(var(--ui-primary))] text-[rgb(var(--ui-primary-foreground))]",

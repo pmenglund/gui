@@ -27,6 +27,7 @@ type Props struct {
 	Actions    []g.Node
 }
 
+// Navbar renders a horizontal navigation bar from the provided items.
 func Navbar(p Props) g.Node {
 	links := make([]g.Node, 0, len(p.Items))
 	for _, item := range p.Items {

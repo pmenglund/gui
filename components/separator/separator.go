@@ -18,6 +18,7 @@ type Props struct {
 	HTMX       public.Props
 }
 
+// Separator renders a visual divider between adjacent content.
 func Separator(p Props) g.Node {
 	className := "my-2 h-px w-full bg-[rgb(var(--ui-border))]"
 	if p.Vertical {
