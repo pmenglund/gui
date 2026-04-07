@@ -26,25 +26,40 @@ type Props struct {
 	HTMX       public.Props
 }
 
+type normalizedItem struct {
+	key   string
+	label string
+	panel g.Node
+}
+
 // Tabs renders a tab list and associated panels from the provided items.
 func Tabs(p Props) g.Node {
-	value := p.Value
-	if value == "" && len(p.Items) > 0 {
-		value = p.Items[0].Key
-	}
-
-	triggers := make([]g.Node, 0, len(p.Items))
-	panels := make([]g.Node, 0, len(p.Items))
-	rootID := a11y.ID("tabs", p.ID, p.DataTestID)
-
+	items := make([]normalizedItem, 0, len(p.Items))
 	for _, item := range p.Items {
 		key := item.Key
 		if key == "" {
 			key = a11y.Slug(item.Label)
 		}
-		panelID := rootID + "-panel-" + key
-		triggerID := rootID + "-trigger-" + key
-		current := key == value
+		items = append(items, normalizedItem{
+			key:   key,
+			label: item.Label,
+			panel: item.Panel,
+		})
+	}
+
+	value := p.Value
+	if len(items) > 0 && !hasValue(items, value) {
+		value = items[0].key
+	}
+
+	triggers := make([]g.Node, 0, len(items))
+	panels := make([]g.Node, 0, len(items))
+	rootID := a11y.ID("tabs", p.ID, p.DataTestID)
+
+	for _, item := range items {
+		panelID := rootID + "-panel-" + item.key
+		triggerID := rootID + "-trigger-" + item.key
+		current := item.key == value
 
 		triggers = append(triggers, h.Button(
 			h.Type("button"),
@@ -55,9 +70,11 @@ func Tabs(p Props) g.Node {
 			)),
 			h.Role("tab"),
 			h.Aria("controls", panelID),
+			h.Aria("selected", boolString(current)),
+			h.TabIndex(tabIndex(current)),
 			h.Data("ui-trigger", ""),
-			h.Data("ui-target", key),
-			g.Text(item.Label),
+			h.Data("ui-target", item.key),
+			g.Text(item.label),
 		))
 
 		panels = append(panels, h.Div(
@@ -65,9 +82,10 @@ func Tabs(p Props) g.Node {
 			h.Class("rounded-[var(--ui-radius)] border bg-[rgb(var(--ui-surface))] p-4"),
 			h.Role("tabpanel"),
 			h.Aria("labelledby", triggerID),
+			g.If(!current, h.Hidden("hidden")),
 			h.Data("ui-content", ""),
-			h.Data("ui-target", key),
-			item.Panel,
+			h.Data("ui-target", item.key),
+			item.panel,
 		))
 	}
 
@@ -86,4 +104,27 @@ func Tabs(p Props) g.Node {
 			h.Div(h.Class("grid gap-4"), g.Group(panels)),
 		)...,
 	)
+}
+
+func hasValue(items []normalizedItem, value string) bool {
+	for _, item := range items {
+		if item.key == value {
+			return true
+		}
+	}
+	return false
+}
+
+func boolString(ok bool) string {
+	if ok {
+		return "true"
+	}
+	return "false"
+}
+
+func tabIndex(current bool) string {
+	if current {
+		return "0"
+	}
+	return "-1"
 }
