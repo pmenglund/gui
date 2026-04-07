@@ -35,7 +35,7 @@ func Tabs(p Props) g.Node {
 
 	triggers := make([]g.Node, 0, len(p.Items))
 	panels := make([]g.Node, 0, len(p.Items))
-	rootID := a11y.ID("tabs", p.ID, p.DataTestID)
+	rootID := a11y.InstanceID("tabs", p.ID, p.DataTestID)
 
 	for _, item := range p.Items {
 		key := item.Key

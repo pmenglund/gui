@@ -4,8 +4,11 @@ import (
 	"fmt"
 	"hash/fnv"
 	"strings"
+	"sync/atomic"
 	"unicode"
 )
+
+var instanceCounter atomic.Uint64
 
 // ID returns the provided id, or a deterministic id derived from the seeds.
 func ID(prefix, provided string, seeds ...string) string {
@@ -19,6 +22,14 @@ func ID(prefix, provided string, seeds ...string) string {
 		base = fmt.Sprintf("%x", h.Sum32())
 	}
 	return prefix + "-" + base
+}
+
+// InstanceID returns the provided id, or a unique id derived from the seeds.
+func InstanceID(prefix, provided string, seeds ...string) string {
+	if provided != "" {
+		return provided
+	}
+	return fmt.Sprintf("%s-%d", ID(prefix, "", seeds...), instanceCounter.Add(1))
 }
 
 // Slug builds a lowercase identifier fragment from human-readable text.

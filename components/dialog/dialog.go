@@ -26,7 +26,7 @@ type Props struct {
 
 // Dialog renders a modal dialog shell and its trigger content.
 func Dialog(p Props, children ...g.Node) g.Node {
-	id := a11y.ID("dialog", p.ID, p.Title, p.DataTestID)
+	id := a11y.InstanceID("dialog", p.ID, p.Title, p.DataTestID)
 	titleID := id + "-title"
 	descID := id + "-description"
 	trigger := p.Trigger

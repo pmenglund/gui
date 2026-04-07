@@ -25,7 +25,7 @@ type Props struct {
 
 // Switch renders a binary toggle control with optional inline content.
 func Switch(p Props, children ...g.Node) g.Node {
-	id := a11y.ID("switch", p.ID, p.Name, p.Label, p.DataTestID)
+	id := a11y.InstanceID("switch", p.ID, p.Name, p.Label, p.DataTestID)
 	labelContent := children
 	if len(labelContent) == 0 && p.Label != "" {
 		labelContent = []g.Node{g.Text(p.Label)}

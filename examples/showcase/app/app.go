@@ -131,19 +131,22 @@ func Primitives() g.Node {
 				badge.Badge(badge.Props{Variant: badge.VariantSuccess}, g.Text("Healthy")),
 			)),
 			sectionCard("Inputs", "", formfield.FormField(formfield.Props{
+				ID:          "primitives-project-name",
 				Label:       "Project name",
 				Description: "A plain text input with token-driven focus styles.",
 				Builder: func(ids formfield.IDs) g.Node {
 					return input.Input(input.Props{ID: ids.ControlID, Placeholder: "Aurora", DescribedBy: ids.DescriptionID})
 				},
 			}), formfield.FormField(formfield.Props{
+				ID:    "primitives-project-summary",
 				Label: "Project summary",
 				Builder: func(ids formfield.IDs) g.Node {
 					return textarea.Textarea(textarea.Props{ID: ids.ControlID, Value: "Server-rendered interfaces with a narrow client runtime."})
 				},
 			})),
-			sectionCard("Selection controls", "", checkbox.Checkbox(checkbox.Props{Label: "Enable shipping updates", Checked: true}),
+			sectionCard("Selection controls", "", checkbox.Checkbox(checkbox.Props{ID: "primitives-shipping-updates", Label: "Enable shipping updates", Checked: true}),
 				radiogroup.RadioGroup(radiogroup.Props{
+					ID:     "primitives-support-tier",
 					Name:   "tier",
 					Legend: "Support tier",
 					Value:  "team",
@@ -152,7 +155,7 @@ func Primitives() g.Node {
 						{Value: "team", Label: "Team", Description: "Shared access and audit trail."},
 					},
 				}),
-				switchui.Switch(switchui.Props{Label: "Compact mode", Checked: true}),
+				switchui.Switch(switchui.Props{ID: "primitives-compact-mode", Label: "Compact mode", Checked: true}),
 				selectui.Select(selectui.Props{
 					Placeholder: "Choose a region",
 					Options: []selectui.Option{
@@ -174,6 +177,7 @@ func Forms() g.Node {
 		cardGrid(
 			sectionCard("Accessible field composition", "",
 				formfield.FormField(formfield.Props{
+					ID:          "forms-work-email",
 					Label:       "Work email",
 					Description: "Used for deployment notifications.",
 					Error:       "Please use a company email address.",
@@ -189,6 +193,7 @@ func Forms() g.Node {
 					},
 				}),
 				formfield.FormField(formfield.Props{
+					ID:          "forms-deployment-notes",
 					Label:       "Deployment notes",
 					Description: "Rendered as a textarea with preserved native behavior.",
 					Builder: func(ids formfield.IDs) g.Node {
@@ -234,6 +239,7 @@ func Forms() g.Node {
 // Interactive renders the showcase page for runtime-driven components.
 func Interactive() g.Node {
 	dialogExample := dialog.Dialog(dialog.Props{
+		ID:          "interactive-dialog",
 		Title:       "Review rollout",
 		Description: "This dialog is opened by the delegated runtime and closes on Escape.",
 		Trigger:     button.Button(button.Props{}, g.Text("Open dialog")),
@@ -241,6 +247,7 @@ func Interactive() g.Node {
 	}, h.P(g.Text("The dialog content stays in place in the DOM and relies on focus restoration instead of portals.")))
 
 	sheetExample := sheet.Sheet(sheet.Props{
+		ID:          "interactive-sheet",
 		Title:       "Deployment details",
 		Description: "The sheet shares the same runtime state model as the dialog.",
 		Trigger:     button.Button(button.Props{Variant: button.VariantOutline}, g.Text("Open sheet")),
@@ -261,6 +268,7 @@ func Interactive() g.Node {
 	})
 
 	tabExample := tabs.Tabs(tabs.Props{
+		ID: "interactive-tabs",
 		Items: []tabs.Item{
 			{Key: "overview", Label: "Overview", Panel: h.P(g.Text("The overview panel is visible on first paint."))},
 			{Key: "activity", Label: "Activity", Panel: h.P(g.Text("The tabs runtime handles keyboard navigation with arrow keys."))},
@@ -295,6 +303,7 @@ func HTMXPage() g.Node {
 			),
 			sectionCard("Inline validation", "",
 				formfield.FormField(formfield.Props{
+					ID:          "htmx-email",
 					Label:       "Email",
 					Description: "The hint below is replaced by an HTMX request as you type.",
 					Builder: func(ids formfield.IDs) g.Node {
