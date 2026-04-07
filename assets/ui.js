@@ -1,4 +1,7 @@
 (function () {
+  var FOCUSABLE_SELECTOR =
+    "[autofocus], button:not([disabled]), [href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex='-1'])";
+
   function closestController(el) {
     return el ? el.closest("[data-ui-controller]") : null;
   }
@@ -9,6 +12,65 @@
 
   function triggerFor(root) {
     return root ? root.querySelector("[data-ui-trigger]") : null;
+  }
+
+  function isFocusable(el) {
+    return !!el && typeof el.matches === "function" && el.matches(FOCUSABLE_SELECTOR);
+  }
+
+  function firstFocusableWithin(el) {
+    return el ? el.querySelector(FOCUSABLE_SELECTOR) : null;
+  }
+
+  function focusableTriggerFor(root) {
+    var trigger = triggerFor(root);
+    if (!trigger) return null;
+    return isFocusable(trigger) ? trigger : firstFocusableWithin(trigger);
+  }
+
+  function openFocusTarget(root) {
+    var content = contentFor(root);
+    if (!content) return null;
+
+    if (root.dataset.uiController === "dialog" || root.dataset.uiController === "sheet") {
+      return content.querySelector("[role='dialog']");
+    }
+
+    if (root.dataset.uiController === "dropdownmenu") {
+      return firstFocusableWithin(content);
+    }
+
+    return null;
+  }
+
+  function focusElement(el) {
+    if (el && typeof el.focus === "function") {
+      el.focus();
+    }
+  }
+
+  function focusLater(el) {
+    if (!el || typeof el.focus !== "function") return;
+
+    if (typeof window.requestAnimationFrame === "function") {
+      window.requestAnimationFrame(function () {
+        el.focus();
+      });
+      return;
+    }
+
+    window.setTimeout(function () {
+      el.focus();
+    }, 0);
+  }
+
+  function restoreFocus(root) {
+    focusLater(focusableTriggerFor(root));
+  }
+
+  function close(root) {
+    setState(root, false);
+    restoreFocus(root);
   }
 
   function setState(root, open) {
@@ -39,14 +101,9 @@
     var open = root && root.dataset.uiState === "open";
     setState(root, !open);
     if (!open) {
-      var focusTarget = contentFor(root);
-      if (focusTarget) {
-        var autoFocus = focusTarget.querySelector("[autofocus], button, [href], input, select, textarea, [tabindex]:not([tabindex='-1'])");
-        if (autoFocus) autoFocus.focus();
-      }
+      focusElement(openFocusTarget(root));
     } else {
-      var trigger = triggerFor(root);
-      if (trigger) trigger.focus();
+      restoreFocus(root);
     }
   }
 
@@ -98,18 +155,16 @@
       }
     }
 
-    var close = event.target.closest("[data-ui-close]");
-    if (close) {
-      var closeRoot = closestController(close);
-      setState(closeRoot, false);
-      var closeTrigger = triggerFor(closeRoot);
-      if (closeTrigger) closeTrigger.focus();
+    var closeButton = event.target.closest("[data-ui-close]");
+    if (closeButton) {
+      var closeRoot = closestController(closeButton);
+      close(closeRoot);
       return;
     }
 
     document.querySelectorAll("[data-ui-controller='dropdownmenu'][data-ui-state='open']").forEach(function (root) {
       if (!root.contains(event.target)) {
-        setState(root, false);
+        close(root);
       }
     });
   });
@@ -117,9 +172,7 @@
   document.addEventListener("keydown", function (event) {
     if (event.key === "Escape") {
       document.querySelectorAll("[data-ui-controller][data-ui-state='open']").forEach(function (root) {
-        setState(root, false);
-        var trigger = triggerFor(root);
-        if (trigger) trigger.focus();
+        close(root);
       });
     }
 

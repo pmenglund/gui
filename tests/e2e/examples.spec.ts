@@ -14,14 +14,22 @@ test("form workflow example exposes a realistic release request form", async ({ 
 test("runtime workbench example keeps interactive controls testable", async ({ page }) => {
   await page.goto("/examples/runtime-workbench");
 
-  await page.getByRole("button", { name: "Open approval dialog" }).click();
+  const dialogTrigger = page.getByRole("button", { name: "Open approval dialog" });
+  const dialogSurface = page.getByRole("dialog", { name: "Approve rollout" });
+  await dialogTrigger.click();
+  await expect(dialogSurface).toBeFocused();
   await expect(page.getByText("Confirm the canary has remained healthy for five minutes before promoting the release.")).toBeVisible();
   await page.keyboard.press("Escape");
+  await expect(dialogTrigger).toBeFocused();
   await expect(page.getByText("Confirm the canary has remained healthy for five minutes before promoting the release.")).toBeHidden();
 
-  await page.getByRole("button", { name: "Quick actions" }).click();
+  const quickActionsTrigger = page.getByRole("button", { name: "Quick actions" });
+  const viewServiceLogs = page.getByRole("link", { name: "View service logs" });
+  await quickActionsTrigger.click();
+  await expect(viewServiceLogs).toBeFocused();
   await expect(page.getByText("Pause rollout")).toBeVisible();
   await page.mouse.click(5, 5);
+  await expect(quickActionsTrigger).toBeFocused();
   await expect(page.getByText("Pause rollout")).toBeHidden();
 
   await page.getByRole("tab", { name: "Overview" }).focus();
@@ -29,11 +37,20 @@ test("runtime workbench example keeps interactive controls testable", async ({ p
   await expect(page.getByRole("tab", { name: "Activity" })).toBeFocused();
   await expect(page.getByText("Keyboard arrow keys move focus between tabs without a client-side framework.")).toBeVisible();
 
-  await page.getByRole("button", { name: "Show save toast" }).click();
+  const toastTrigger = page.getByRole("button", { name: "Show save toast" });
+  await toastTrigger.click();
+  await expect(toastTrigger).toBeFocused();
   await expect(page.getByText("Incident note saved")).toBeVisible();
+  await page.getByRole("button", { name: "Dismiss" }).click();
+  await expect(toastTrigger).toBeFocused();
+  await expect(page.getByText("Incident note saved")).toBeHidden();
 
-  await page.getByRole("button", { name: "Open operator sheet" }).click();
+  const sheetTrigger = page.getByRole("button", { name: "Open operator sheet" });
+  const sheetSurface = page.getByRole("dialog", { name: "Operator notes" });
+  await sheetTrigger.click();
+  await expect(sheetSurface).toBeFocused();
   await expect(page.getByText("The sheet is useful for secondary details that should not crowd the main grid.")).toBeVisible();
   await page.keyboard.press("Escape");
+  await expect(sheetTrigger).toBeFocused();
   await expect(page.getByText("The sheet is useful for secondary details that should not crowd the main grid.")).toBeHidden();
 });
