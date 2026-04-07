@@ -52,6 +52,7 @@ func Sheet(p Props, children ...g.Node) g.Node {
 				h.Aside(
 					h.Class(tw.Join("absolute inset-y-0 right-0 z-10 grid w-full max-w-md gap-4 border-l bg-[rgb(var(--ui-surface))] p-6 shadow-2xl", p.Class)),
 					h.Role("dialog"),
+					g.Attr("tabindex", "-1"),
 					h.Aria("modal", "true"),
 					h.Aria("labelledby", titleID),
 					g.If(p.Description != "", h.Aria("describedby", descID)),

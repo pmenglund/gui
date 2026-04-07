@@ -50,6 +50,9 @@ func TestHTMXFragmentsContainStableHooks(t *testing.T) {
 	if !strings.Contains(overlay, `data-ui-trigger=""`) {
 		t.Fatalf("overlay fragment missing delegated trigger hook: %s", overlay)
 	}
+	if !strings.Contains(overlay, `role="dialog" tabindex="-1"`) {
+		t.Fatalf("overlay fragment missing focusable dialog surface: %s", overlay)
+	}
 
 	validation := testutil.Render(t, app.ValidationFragment("ops@example.com"))
 	if !strings.Contains(validation, `Looks good for a company email.`) {
