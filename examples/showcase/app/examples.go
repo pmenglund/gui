@@ -102,31 +102,27 @@ func FormWorkflowExample() g.Node {
 				),
 			),
 			sectionCard("Deployment request", "FormField coordinates common field wiring, while the custom ticket block shows direct use of label, helper text, and error text.",
-				formfield.FormField(formfield.Props{
-					Label:       "Service name",
-					Description: "Shown in Slack notifications and the deployment feed.",
-					Required:    true,
-					Builder: func(ids formfield.IDs) g.Node {
-						return input.Input(input.Props{
-							ID:          ids.ControlID,
-							Name:        "service",
-							Value:       "search-api",
-							DescribedBy: ids.DescriptionID,
-						})
+				formfield.Input(
+					formfield.Props{
+						Label:       "Service name",
+						Description: "Shown in Slack notifications and the deployment feed.",
+						Required:    true,
 					},
-				}),
-				formfield.FormField(formfield.Props{
-					Label:       "Deployment notes",
-					Description: "Summarize the blast radius, rollback steps, and what changed.",
-					Builder: func(ids formfield.IDs) g.Node {
-						return textarea.Textarea(textarea.Props{
-							ID:          ids.ControlID,
-							Name:        "notes",
-							Value:       "Ship the new query planner behind a 20% traffic split and monitor latency for ten minutes.",
-							DescribedBy: ids.DescriptionID,
-						})
+					input.Props{
+						Name:  "service",
+						Value: "search-api",
 					},
-				}),
+				),
+				formfield.Textarea(
+					formfield.Props{
+						Label:       "Deployment notes",
+						Description: "Summarize the blast radius, rollback steps, and what changed.",
+					},
+					textarea.Props{
+						Name:  "notes",
+						Value: "Ship the new query planner behind a 20% traffic split and monitor latency for ten minutes.",
+					},
+				),
 				releaseTicketField(),
 			),
 			sectionCard("Review settings", "These controls are rendered directly so tests can prove individual component behavior without relying only on composed wrappers.",
@@ -149,23 +145,21 @@ func FormWorkflowExample() g.Node {
 						{Value: "change-advisory", Label: "Change advisory", Description: "Required for high-risk changes outside the normal window."},
 					},
 				}),
-				formfield.FormField(formfield.Props{
-					Label:       "Deployment window",
-					Description: "Pick the window that matches the primary on-call rotation.",
-					Builder: func(ids formfield.IDs) g.Node {
-						return selectui.Select(selectui.Props{
-							ID:          ids.ControlID,
-							Name:        "window",
-							Value:       "eu-morning",
-							DescribedBy: ids.DescriptionID,
-							Options: []selectui.Option{
-								{Value: "us-early", Label: "US early morning"},
-								{Value: "eu-morning", Label: "EU business morning"},
-								{Value: "global-offhours", Label: "Global off-hours"},
-							},
-						})
+				formfield.Select(
+					formfield.Props{
+						Label:       "Deployment window",
+						Description: "Pick the window that matches the primary on-call rotation.",
 					},
-				}),
+					selectui.Props{
+						Name:  "window",
+						Value: "eu-morning",
+						Options: []selectui.Option{
+							{Value: "us-early", Label: "US early morning"},
+							{Value: "eu-morning", Label: "EU business morning"},
+							{Value: "global-offhours", Label: "Global off-hours"},
+						},
+					},
+				),
 			),
 		),
 	)

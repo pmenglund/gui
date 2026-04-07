@@ -28,29 +28,36 @@ type Props struct {
 	Description string
 	Error       string
 	Required    bool
-	Builder     func(IDs) g.Node
-	HTMX        public.Props
+	// Builder is the escape hatch for custom controls. Standard input-like controls
+	// should prefer the typed helpers in this package so FormField can apply the
+	// generated accessibility wiring automatically.
+	Builder func(IDs) g.Node
+	HTMX    public.Props
 }
 
-// FormField renders a labeled form control with optional description and error text.
-func FormField(p Props, children ...g.Node) g.Node {
+func resolveIDs(p Props) IDs {
 	controlID := a11y.ID("field", p.ID, p.Label, p.DataTestID)
-	descriptionID := ""
-	errorID := ""
+
+	ids := IDs{ControlID: controlID}
 	if p.Description != "" {
-		descriptionID = controlID + "-description"
+		ids.DescriptionID = controlID + "-description"
 	}
 	if p.Error != "" {
-		errorID = controlID + "-error"
+		ids.ErrorID = controlID + "-error"
 	}
+
+	return ids
+}
+
+// FormField renders the field shell around a control. For standard inputs,
+// textareas, and selects, prefer the typed helpers in this package so the
+// control receives the generated ID and ARIA wiring automatically.
+func FormField(p Props, children ...g.Node) g.Node {
+	ids := resolveIDs(p)
 
 	var control g.Node = g.Group(children)
 	if p.Builder != nil {
-		control = p.Builder(IDs{
-			ControlID:     controlID,
-			DescriptionID: descriptionID,
-			ErrorID:       errorID,
-		})
+		control = p.Builder(ids)
 	}
 
 	return h.Div(
@@ -62,10 +69,10 @@ func FormField(p Props, children ...g.Node) g.Node {
 				p.HTMX,
 				p.Attributes,
 			),
-			label.Label(label.Props{For: controlID, Required: p.Required}, g.Text(p.Label)),
+			label.Label(label.Props{For: ids.ControlID, Required: p.Required}, g.Text(p.Label)),
 			control,
-			g.If(p.Description != "", fielddescription.FieldDescription(fielddescription.Props{ID: descriptionID}, g.Text(p.Description))),
-			g.If(p.Error != "", fielderror.FieldError(fielderror.Props{ID: errorID}, g.Text(p.Error))),
+			g.If(p.Description != "", fielddescription.FieldDescription(fielddescription.Props{ID: ids.DescriptionID}, g.Text(p.Description))),
+			g.If(p.Error != "", fielderror.FieldError(fielderror.Props{ID: ids.ErrorID}, g.Text(p.Error))),
 		)...,
 	)
 }

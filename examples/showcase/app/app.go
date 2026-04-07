@@ -130,18 +130,19 @@ func Primitives() g.Node {
 				badge.Badge(badge.Props{}, g.Text("Stable")),
 				badge.Badge(badge.Props{Variant: badge.VariantSuccess}, g.Text("Healthy")),
 			)),
-			sectionCard("Inputs", "", formfield.FormField(formfield.Props{
-				Label:       "Project name",
-				Description: "A plain text input with token-driven focus styles.",
-				Builder: func(ids formfield.IDs) g.Node {
-					return input.Input(input.Props{ID: ids.ControlID, Placeholder: "Aurora", DescribedBy: ids.DescriptionID})
-				},
-			}), formfield.FormField(formfield.Props{
-				Label: "Project summary",
-				Builder: func(ids formfield.IDs) g.Node {
-					return textarea.Textarea(textarea.Props{ID: ids.ControlID, Value: "Server-rendered interfaces with a narrow client runtime."})
-				},
-			})),
+			sectionCard("Inputs", "",
+				formfield.Input(
+					formfield.Props{
+						Label:       "Project name",
+						Description: "A plain text input with token-driven focus styles.",
+					},
+					input.Props{Placeholder: "Aurora"},
+				),
+				formfield.Textarea(
+					formfield.Props{Label: "Project summary"},
+					textarea.Props{Value: "Server-rendered interfaces with a narrow client runtime."},
+				),
+			),
 			sectionCard("Selection controls", "", checkbox.Checkbox(checkbox.Props{Label: "Enable shipping updates", Checked: true}),
 				radiogroup.RadioGroup(radiogroup.Props{
 					Name:   "tier",
@@ -173,32 +174,25 @@ func Forms() g.Node {
 		hero("Forms and navigation", "FormField coordinates IDs, descriptions, and errors while the navigation components stay plain HTML."),
 		cardGrid(
 			sectionCard("Accessible field composition", "",
-				formfield.FormField(formfield.Props{
-					Label:       "Work email",
-					Description: "Used for deployment notifications.",
-					Error:       "Please use a company email address.",
-					Required:    true,
-					Builder: func(ids formfield.IDs) g.Node {
-						return input.Input(input.Props{
-							ID:          ids.ControlID,
-							Type:        "email",
-							Value:       "person@example.com",
-							Invalid:     true,
-							DescribedBy: strings.TrimSpace(strings.Join([]string{ids.DescriptionID, ids.ErrorID}, " ")),
-						})
+				formfield.Input(
+					formfield.Props{
+						Label:       "Work email",
+						Description: "Used for deployment notifications.",
+						Error:       "Please use a company email address.",
+						Required:    true,
 					},
-				}),
-				formfield.FormField(formfield.Props{
-					Label:       "Deployment notes",
-					Description: "Rendered as a textarea with preserved native behavior.",
-					Builder: func(ids formfield.IDs) g.Node {
-						return textarea.Textarea(textarea.Props{
-							ID:          ids.ControlID,
-							Value:       "Roll out to the canary ring first.",
-							DescribedBy: ids.DescriptionID,
-						})
+					input.Props{
+						Type:  "email",
+						Value: "person@example.com",
 					},
-				}),
+				),
+				formfield.Textarea(
+					formfield.Props{
+						Label:       "Deployment notes",
+						Description: "Rendered as a textarea with preserved native behavior.",
+					},
+					textarea.Props{Value: "Roll out to the canary ring first."},
+				),
 			),
 			sectionCard("Navigation patterns", "",
 				breadcrumbs.Breadcrumbs(breadcrumbs.Props{Items: []breadcrumbs.Item{
@@ -294,24 +288,23 @@ func HTMXPage() g.Node {
 				h.Div(h.ID("counter-target"), CounterFragment(1)),
 			),
 			sectionCard("Inline validation", "",
-				formfield.FormField(formfield.Props{
-					Label:       "Email",
-					Description: "The hint below is replaced by an HTMX request as you type.",
-					Builder: func(ids formfield.IDs) g.Node {
-						return input.Input(input.Props{
-							ID:          ids.ControlID,
-							Name:        "email",
-							Placeholder: "you@company.com",
-							DescribedBy: ids.DescriptionID + " email-hint",
-							HTMX: public.Props{
-								Get:     "/partials/validate",
-								Trigger: "keyup changed delay:300ms",
-								Target:  "#email-hint",
-								Swap:    "outerHTML",
-							},
-						})
+				formfield.Input(
+					formfield.Props{
+						Label:       "Email",
+						Description: "The hint below is replaced by an HTMX request as you type.",
 					},
-				}),
+					input.Props{
+						Name:        "email",
+						Placeholder: "you@company.com",
+						DescribedBy: "email-hint",
+						HTMX: public.Props{
+							Get:     "/partials/validate",
+							Trigger: "keyup changed delay:300ms",
+							Target:  "#email-hint",
+							Swap:    "outerHTML",
+						},
+					},
+				),
 				ValidationFragment(""),
 			),
 			sectionCard("Paged table", "",
