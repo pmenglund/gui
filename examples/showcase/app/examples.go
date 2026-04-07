@@ -149,17 +149,23 @@ func FormWorkflowExample() g.Node {
 						{Value: "change-advisory", Label: "Change advisory", Description: "Required for high-risk changes outside the normal window."},
 					},
 				}),
-				selectui.Select(selectui.Props{
-					Name:        "window",
-					Value:       "eu-morning",
-					DescribedBy: "window-help",
-					Options: []selectui.Option{
-						{Value: "us-early", Label: "US early morning"},
-						{Value: "eu-morning", Label: "EU business morning"},
-						{Value: "global-offhours", Label: "Global off-hours"},
+				formfield.FormField(formfield.Props{
+					Label:       "Deployment window",
+					Description: "Pick the window that matches the primary on-call rotation.",
+					Builder: func(ids formfield.IDs) g.Node {
+						return selectui.Select(selectui.Props{
+							ID:          ids.ControlID,
+							Name:        "window",
+							Value:       "eu-morning",
+							DescribedBy: ids.DescriptionID,
+							Options: []selectui.Option{
+								{Value: "us-early", Label: "US early morning"},
+								{Value: "eu-morning", Label: "EU business morning"},
+								{Value: "global-offhours", Label: "Global off-hours"},
+							},
+						})
 					},
 				}),
-				fielddescription.FieldDescription(fielddescription.Props{ID: "window-help"}, g.Text("Pick the window that matches the primary on-call rotation.")),
 			),
 		),
 	)

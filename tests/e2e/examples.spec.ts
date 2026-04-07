@@ -8,7 +8,7 @@ test("form workflow example exposes a realistic release request form", async ({ 
   await expect(page.getByLabel("Service name")).toHaveValue("search-api");
   await expect(page.getByLabel(/Change ticket/)).toHaveValue("CHG-1842");
   await expect(page.getByText("Ticket ownership has not been assigned yet.")).toBeVisible();
-  await expect(page.getByRole("combobox")).toHaveValue("eu-morning");
+  await expect(page.getByLabel("Deployment window")).toHaveValue("eu-morning");
 });
 
 test("runtime workbench example keeps interactive controls testable", async ({ page }) => {
