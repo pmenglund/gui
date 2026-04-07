@@ -19,6 +19,7 @@ type Props struct {
 	Required   bool
 }
 
+// Label renders a label element with optional required-state markup.
 func Label(p Props, children ...g.Node) g.Node {
 	contents := children
 	if p.Required {

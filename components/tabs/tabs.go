@@ -26,6 +26,7 @@ type Props struct {
 	HTMX       public.Props
 }
 
+// Tabs renders a tab list and associated panels from the provided items.
 func Tabs(p Props) g.Node {
 	value := p.Value
 	if value == "" && len(p.Items) > 0 {

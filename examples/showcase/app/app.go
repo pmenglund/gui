@@ -39,6 +39,7 @@ import (
 	public "github.com/pmenglund/gui/htmx"
 )
 
+// NewMux returns the showcase HTTP handler rooted at the provided repository path.
 func NewMux(root string) http.Handler {
 	mux := http.NewServeMux()
 
@@ -87,6 +88,7 @@ func NewMux(root string) http.Handler {
 	return mux
 }
 
+// Overview renders the showcase landing page.
 func Overview() g.Node {
 	return shell("Overview", "/",
 		hero("gomponents UI for HTMX-heavy Go apps", "Typed components, semantic defaults, and progressive enhancement in one place."),
@@ -99,6 +101,7 @@ func Overview() g.Node {
 	)
 }
 
+// Primitives renders the showcase page for primitive components.
 func Primitives() g.Node {
 	return shell("Primitives", "/primitives",
 		hero("Primitive catalog", "The stable building blocks use native HTML semantics, typed props, and optional HTMX attributes."),
@@ -148,6 +151,7 @@ func Primitives() g.Node {
 	)
 }
 
+// Forms renders the showcase page for form and navigation components.
 func Forms() g.Node {
 	return shell("Forms", "/forms",
 		hero("Forms and navigation", "FormField coordinates IDs, descriptions, and errors while the navigation components stay plain HTML."),
@@ -211,6 +215,7 @@ func Forms() g.Node {
 	)
 }
 
+// Interactive renders the showcase page for runtime-driven components.
 func Interactive() g.Node {
 	dialogExample := dialog.Dialog(dialog.Props{
 		Title:       "Review rollout",
@@ -257,6 +262,7 @@ func Interactive() g.Node {
 	)
 }
 
+// HTMXPage renders the showcase page for HTMX integration examples.
 func HTMXPage() g.Node {
 	return shell("HTMX", "/htmx",
 		hero("HTMX support", "Components accept typed HTMX props and continue working after swaps because the runtime is delegated."),
@@ -309,6 +315,7 @@ func HTMXPage() g.Node {
 	)
 }
 
+// CounterFragment renders the HTMX counter partial for the provided value.
 func CounterFragment(value int) g.Node {
 	return card.Card(card.Props{
 		Title:       fmt.Sprintf("Counter update %d", value),
@@ -316,6 +323,7 @@ func CounterFragment(value int) g.Node {
 	}, badge.Badge(badge.Props{}, g.Text("Fresh partial")))
 }
 
+// ValidationFragment renders the email validation partial for the provided input.
 func ValidationFragment(email string) g.Node {
 	if strings.Contains(email, "@") && strings.Contains(email, ".") {
 		return h.P(h.ID("email-hint"), h.Class("text-sm font-medium text-[rgb(var(--ui-success))]"), g.Text("Looks good for a company email."))
@@ -323,6 +331,7 @@ func ValidationFragment(email string) g.Node {
 	return h.P(h.ID("email-hint"), h.Class("text-sm font-medium text-[rgb(var(--ui-danger))]"), g.Text("Enter a valid email address to continue."))
 }
 
+// ActivityFragment renders the paginated activity-feed partial for the provided page.
 func ActivityFragment(page int) g.Node {
 	rows := map[int][]table.Row{
 		1: {
@@ -353,6 +362,7 @@ func ActivityFragment(page int) g.Node {
 	)
 }
 
+// OverlayFragment renders the overlay trigger partial used by the showcase.
 func OverlayFragment() g.Node {
 	return dialog.Dialog(dialog.Props{
 		Title:       "Swapped fragment",

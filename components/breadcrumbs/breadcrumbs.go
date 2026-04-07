@@ -25,6 +25,7 @@ type Props struct {
 	Items      []Item
 }
 
+// Breadcrumbs renders a breadcrumb trail from the provided items.
 func Breadcrumbs(p Props) g.Node {
 	crumbs := make([]g.Node, 0, len(p.Items))
 	for i, item := range p.Items {

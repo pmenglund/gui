@@ -22,6 +22,7 @@ type Props struct {
 	Size       string
 }
 
+// Avatar renders an avatar with an image, initials fallback, or both.
 func Avatar(p Props) g.Node {
 	size := p.Size
 	if size == "" {

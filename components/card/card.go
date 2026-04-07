@@ -20,6 +20,7 @@ type Props struct {
 	HTMX        public.Props
 }
 
+// Card renders a bordered surface for grouping related content.
 func Card(p Props, children ...g.Node) g.Node {
 	body := []g.Node{}
 	if p.Title != "" || p.Description != "" {

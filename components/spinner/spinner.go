@@ -18,6 +18,7 @@ type Props struct {
 	Size       string
 }
 
+// Spinner renders an animated loading indicator.
 func Spinner(p Props) g.Node {
 	size := p.Size
 	if size == "" {

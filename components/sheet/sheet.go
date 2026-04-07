@@ -22,6 +22,7 @@ type Props struct {
 	HTMX        public.Props
 }
 
+// Sheet renders a side panel overlay and its trigger content.
 func Sheet(p Props, children ...g.Node) g.Node {
 	id := a11y.ID("sheet", p.ID, p.Title, p.DataTestID)
 	titleID := id + "-title"

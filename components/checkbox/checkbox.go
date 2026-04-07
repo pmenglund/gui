@@ -26,6 +26,7 @@ type Props struct {
 	HTMX        public.Props
 }
 
+// Checkbox renders a checkbox control with optional inline content.
 func Checkbox(p Props, children ...g.Node) g.Node {
 	id := a11y.ID("checkbox", p.ID, p.Name, p.Label, p.DataTestID)
 	labelContent := children

@@ -22,6 +22,7 @@ type Props struct {
 	HTMX        public.Props
 }
 
+// Toast renders a transient notification surface with the provided content.
 func Toast(p Props, children ...g.Node) g.Node {
 	trigger := p.Trigger
 	if trigger == nil {

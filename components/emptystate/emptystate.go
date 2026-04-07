@@ -22,6 +22,7 @@ type Props struct {
 	HTMX         public.Props
 }
 
+// EmptyState renders a placeholder view for empty content.
 func EmptyState(p Props) g.Node {
 	return h.Section(
 		append(

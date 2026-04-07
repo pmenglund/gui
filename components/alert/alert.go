@@ -28,6 +28,7 @@ type Props struct {
 	HTMX        public.Props
 }
 
+// Alert renders a status message with the provided variant and content.
 func Alert(p Props, children ...g.Node) g.Node {
 	variant := map[Variant]string{
 		VariantInfo:    "border-[rgb(var(--ui-primary))] bg-[rgb(var(--ui-primary-foreground))]",
