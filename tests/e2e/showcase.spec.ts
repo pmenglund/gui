@@ -1,5 +1,21 @@
 import { expect, test } from "@playwright/test";
 
+test("tabs render the correct initial server state without JavaScript", async ({ browser }) => {
+  const context = await browser.newContext({ javaScriptEnabled: false });
+  const page = await context.newPage();
+
+  await page.goto("http://127.0.0.1:8080/interactive");
+
+  await expect(page.getByRole("tab", { name: "Overview" })).toHaveAttribute("aria-selected", "true");
+  await expect(page.getByRole("tab", { name: "Overview" })).toHaveAttribute("tabindex", "0");
+  await expect(page.getByRole("tab", { name: "Activity" })).toHaveAttribute("aria-selected", "false");
+  await expect(page.getByRole("tab", { name: "Activity" })).toHaveAttribute("tabindex", "-1");
+  await expect(page.locator("[data-ui-content][data-ui-target='overview']")).toBeVisible();
+  await expect(page.locator("[data-ui-content][data-ui-target='activity']")).toBeHidden();
+
+  await context.close();
+});
+
 test("interactive widgets respond to clicks and keyboard controls", async ({ page }) => {
   await page.goto("/interactive");
 
