@@ -63,6 +63,12 @@ func NewMux(root string) http.Handler {
 	mux.HandleFunc("/forms", func(w http.ResponseWriter, r *http.Request) { renderPage(w, Forms()) })
 	mux.HandleFunc("/interactive", func(w http.ResponseWriter, r *http.Request) { renderPage(w, Interactive()) })
 	mux.HandleFunc("/htmx", func(w http.ResponseWriter, r *http.Request) { renderPage(w, HTMXPage()) })
+	for _, example := range TestableExamples() {
+		example := example
+		mux.HandleFunc(ExamplePath(example.Slug), func(w http.ResponseWriter, r *http.Request) {
+			renderPage(w, example.Build())
+		})
+	}
 	mux.HandleFunc("/partials/counter", func(w http.ResponseWriter, r *http.Request) {
 		value, _ := strconv.Atoi(r.URL.Query().Get("value"))
 		if value == 0 {
@@ -88,6 +94,15 @@ func NewMux(root string) http.Handler {
 }
 
 func Overview() g.Node {
+	exampleCards := make([]g.Node, 0, len(TestableExamples()))
+	for _, example := range TestableExamples() {
+		exampleCards = append(exampleCards,
+			sectionCard(example.Title, example.Summary,
+				h.A(h.Href(ExamplePath(example.Slug)), h.Class("font-medium hover:underline"), g.Text("Open example")),
+			),
+		)
+	}
+
 	return shell("Overview", "/",
 		hero("gomponents UI for HTMX-heavy Go apps", "Typed components, semantic defaults, and progressive enhancement in one place."),
 		cardGrid(
@@ -95,6 +110,7 @@ func Overview() g.Node {
 			sectionCard("Forms and navigation", "Accessible label wiring, table patterns, tabs, breadcrumbs, and pagination.", h.A(h.Href("/forms"), h.Class("font-medium hover:underline"), g.Text("Inspect forms"))),
 			sectionCard("Interactive runtime", "Dialog, sheet, dropdown, toast, and tabs powered by a tiny delegated runtime.", h.A(h.Href("/interactive"), h.Class("font-medium hover:underline"), g.Text("Try interactions"))),
 			sectionCard("HTMX integration", "Built-in `hx-*` support, partial updates, and swapped fragments that stay interactive.", h.A(h.Href("/htmx"), h.Class("font-medium hover:underline"), g.Text("Open HTMX flows"))),
+			g.Group(exampleCards),
 		),
 	)
 }
