@@ -41,6 +41,8 @@ To get the intended styling and behavior in your own app:
 
 The runnable showcase in `examples/showcase` is the reference integration. It shows the stylesheet and script wiring, component composition patterns, and HTMX partial-update flows end to end.
 
+Use `Class` for styling overrides and use `Attributes` only for extra non-conflicting HTML attributes such as `title`, `lang`, `dir`, or custom `data-*` hooks. Raw passthrough attributes do not override component-managed semantics, typed `hx-*` props, or delegated runtime hooks in the `data-ui-*` namespace.
+
 ## Showcase
 
 The repository includes a runnable showcase app so you can inspect the component library before wiring it into your own application.
