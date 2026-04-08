@@ -4,23 +4,31 @@ import (
 	g "maragu.dev/gomponents"
 	h "maragu.dev/gomponents/html"
 
+	"github.com/pmenglund/goth/components/classmode"
 	public "github.com/pmenglund/goth/htmx"
 	"github.com/pmenglund/goth/internal/render"
 	"github.com/pmenglund/goth/internal/tw"
 )
 
+// Variant controls the badge color treatment.
 type Variant string
 
 const (
+	// VariantDefault renders primary badge styling.
 	VariantDefault Variant = "default"
-	VariantMuted   Variant = "muted"
+	// VariantMuted renders muted badge styling.
+	VariantMuted Variant = "muted"
+	// VariantSuccess renders success badge styling.
 	VariantSuccess Variant = "success"
-	VariantDanger  Variant = "danger"
+	// VariantDanger renders danger badge styling.
+	VariantDanger Variant = "danger"
 )
 
+// Props configures Badge rendering.
 type Props struct {
 	ID         string
 	Class      string
+	ClassMode  classmode.ClassMode
 	Attributes []g.Node
 	DataTestID string
 	Variant    Variant
@@ -42,7 +50,7 @@ func Badge(p Props, children ...g.Node) g.Node {
 	return h.Span(append(
 		render.Attrs(
 			p.ID,
-			tw.Join("inline-flex items-center rounded-full border px-2.5 py-1 text-xs font-semibold uppercase tracking-[0.15em]", variant, p.Class),
+			tw.Classes(p.ClassMode, tw.Join("inline-flex items-center rounded-full border px-2.5 py-1 text-xs font-semibold uppercase tracking-[0.15em]", variant), p.Class),
 			p.DataTestID,
 			public.Props{},
 			p.Attributes,

@@ -15,7 +15,7 @@ Run commands from the repository root.
 
 ## Coding Style & Naming Conventions
 
-Use standard Go formatting with `gofmt -w`. Keep public component APIs typed and zero-value-safe. Follow the existing constructor shape: `func ComponentName(p Props, children ...g.Node) g.Node`. Use clear leaf package names matching the directory where possible; note that `components/select` and `components/switch` use package names `selectui` and `switchui` because of Go keywords. Keep shared implementation details under `internal/`.
+Use standard Go formatting with `gofmt -w`. Keep public component APIs typed and zero-value-safe. Follow the existing constructor shape: `func ComponentName(p Props, children ...g.Node) g.Node`. Document every exported function, method, type, const, and var with a Go doc comment. Use clear leaf package names matching the directory where possible; note that `components/select` and `components/switch` use package names `selectui` and `switchui` because of Go keywords. Keep shared implementation details under `internal/`.
 
 For CSS and runtime code, prefer small, explicit changes. Tailwind classes should stay centralized in component code and `assets/ui.css`, and runtime hooks should use the documented `data-ui-*` attributes.
 

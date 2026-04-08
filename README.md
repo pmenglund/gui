@@ -41,6 +41,32 @@ To get the intended styling and behavior in your own app:
 
 The runnable showcase in `examples/showcase` is the reference integration. It shows the stylesheet and script wiring, component composition patterns, and HTMX partial-update flows end to end.
 
+## Host app styling
+
+Use `Class` when you want to add Tailwind utilities to a component root while keeping the goth defaults. Use `classmode.ClassReplace` when your app owns the exact root styling and should not render the default goth root classes. Components that generate child markup also expose slot class props for common internal elements.
+
+```go
+package ui
+
+import (
+	g "maragu.dev/gomponents"
+
+	"github.com/pmenglund/goth/components/card"
+	"github.com/pmenglund/goth/components/classmode"
+)
+
+func ReleaseCard() g.Node {
+	return card.Card(card.Props{
+		ClassMode:  classmode.ClassReplace,
+		Class:      "rounded-lg border border-slate-200 bg-white p-4 shadow-sm",
+		Title:      "Release queue",
+		TitleClass: "text-base font-bold text-slate-950",
+	}, g.Text("Three deploys are ready for review."))
+}
+```
+
+If your app builds Tailwind CSS, include both your app's Go files and the goth component Go files in the Tailwind `content` list so utilities from both sources are retained. Serve `assets/ui.js` only when you use interactive goth widgets such as `dialog`, `dropdownmenu`, `sheet`, `tabs`, or `toast`.
+
 ## Showcase
 
 The repository includes a runnable showcase app so you can inspect the component library before wiring it into your own application.

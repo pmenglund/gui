@@ -4,31 +4,45 @@ import (
 	g "maragu.dev/gomponents"
 	h "maragu.dev/gomponents/html"
 
+	"github.com/pmenglund/goth/components/classmode"
 	public "github.com/pmenglund/goth/htmx"
 	"github.com/pmenglund/goth/internal/render"
 	"github.com/pmenglund/goth/internal/tw"
 )
 
+// Variant controls the button color and border treatment.
 type Variant string
+
+// Size controls the button height and padding.
 type Size string
 
 const (
-	VariantDefault     Variant = "default"
-	VariantOutline     Variant = "outline"
-	VariantGhost       Variant = "ghost"
+	// VariantDefault renders primary button styling.
+	VariantDefault Variant = "default"
+	// VariantOutline renders outlined button styling.
+	VariantOutline Variant = "outline"
+	// VariantGhost renders transparent button styling.
+	VariantGhost Variant = "ghost"
+	// VariantDestructive renders destructive action button styling.
 	VariantDestructive Variant = "destructive"
-	VariantSecondary   Variant = "secondary"
+	// VariantSecondary renders secondary button styling.
+	VariantSecondary Variant = "secondary"
 )
 
 const (
+	// SizeSM renders the small button size.
 	SizeSM Size = "sm"
+	// SizeMD renders the medium button size.
 	SizeMD Size = "md"
+	// SizeLG renders the large button size.
 	SizeLG Size = "lg"
 )
 
+// Props configures Button rendering.
 type Props struct {
 	ID         string
 	Class      string
+	ClassMode  classmode.ClassMode
 	Attributes []g.Node
 	Variant    Variant
 	Size       Size
@@ -68,7 +82,7 @@ func Button(p Props, children ...g.Node) g.Node {
 
 	attrs := render.Attrs(
 		p.ID,
-		recipe.Class(string(p.Variant), string(p.Size), map[string]bool{"disabled": p.Disabled}, p.Class),
+		tw.Classes(p.ClassMode, recipe.Class(string(p.Variant), string(p.Size), map[string]bool{"disabled": p.Disabled}), p.Class),
 		p.DataTestID,
 		p.HTMX,
 		p.Attributes,

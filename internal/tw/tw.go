@@ -1,6 +1,10 @@
 package tw
 
-import "strings"
+import (
+	"strings"
+
+	"github.com/pmenglund/goth/components/classmode"
+)
 
 // Join deduplicates and joins Tailwind class fragments.
 func Join(parts ...string) string {
@@ -15,6 +19,14 @@ func Join(parts ...string) string {
 		}
 	}
 	return strings.Join(out, " ")
+}
+
+// Classes composes root classes according to the public class mode.
+func Classes(mode classmode.ClassMode, defaults, caller string) string {
+	if mode == classmode.ClassReplace {
+		return caller
+	}
+	return Join(defaults, caller)
 }
 
 // When returns the class string only when the condition is true.
