@@ -4,10 +4,10 @@ import (
 	g "maragu.dev/gomponents"
 	h "maragu.dev/gomponents/html"
 
-	public "github.com/pmenglund/gui/htmx"
-	ihtmx "github.com/pmenglund/gui/internal/htmx"
-	"github.com/pmenglund/gui/internal/render"
-	"github.com/pmenglund/gui/internal/tw"
+	public "github.com/pmenglund/goth/htmx"
+	ihtmx "github.com/pmenglund/goth/internal/htmx"
+	"github.com/pmenglund/goth/internal/render"
+	"github.com/pmenglund/goth/internal/tw"
 )
 
 type Item struct {

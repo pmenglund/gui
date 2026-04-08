@@ -1,4 +1,4 @@
-# Build the full v1 `github.com/pmenglund/gui` gomponents UI library with first-class HTMX support
+# Build the full v1 `github.com/pmenglund/goth` gomponents UI library with first-class HTMX support
 
 This ExecPlan is a living document. Keep `Progress`, `Surprises & Discoveries`, `Decision Log`, and `Outcomes & Retrospective` current as implementation proceeds.
 
@@ -50,7 +50,7 @@ Start with the shared plumbing: class composition, accessibility helpers, HTMX a
 
 ## Concrete Steps
 
-Run all commands from `/Users/pme/src/pmenglund/gui`.
+Run all commands from `/Users/pme/src/pmenglund/goth`.
 
 1. Install the toolchain and dependencies.
 2. Implement the shared helpers and assets.

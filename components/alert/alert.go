@@ -4,9 +4,9 @@ import (
 	g "maragu.dev/gomponents"
 	h "maragu.dev/gomponents/html"
 
-	public "github.com/pmenglund/gui/htmx"
-	"github.com/pmenglund/gui/internal/render"
-	"github.com/pmenglund/gui/internal/tw"
+	public "github.com/pmenglund/goth/htmx"
+	"github.com/pmenglund/goth/internal/render"
+	"github.com/pmenglund/goth/internal/tw"
 )
 
 type Variant string

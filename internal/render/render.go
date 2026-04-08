@@ -4,8 +4,8 @@ import (
 	g "maragu.dev/gomponents"
 	h "maragu.dev/gomponents/html"
 
-	public "github.com/pmenglund/gui/htmx"
-	ihtmx "github.com/pmenglund/gui/internal/htmx"
+	public "github.com/pmenglund/goth/htmx"
+	ihtmx "github.com/pmenglund/goth/internal/htmx"
 )
 
 // Attrs merges the common component attributes in stable order.

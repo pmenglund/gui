@@ -4,10 +4,10 @@ import (
 	g "maragu.dev/gomponents"
 	h "maragu.dev/gomponents/html"
 
-	"github.com/pmenglund/gui/components/button"
-	public "github.com/pmenglund/gui/htmx"
-	"github.com/pmenglund/gui/internal/render"
-	"github.com/pmenglund/gui/internal/tw"
+	"github.com/pmenglund/goth/components/button"
+	public "github.com/pmenglund/goth/htmx"
+	"github.com/pmenglund/goth/internal/render"
+	"github.com/pmenglund/goth/internal/tw"
 )
 
 type Props struct {

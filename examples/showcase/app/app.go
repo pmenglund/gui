@@ -10,33 +10,33 @@ import (
 	g "maragu.dev/gomponents"
 	h "maragu.dev/gomponents/html"
 
-	"github.com/pmenglund/gui/components/alert"
-	"github.com/pmenglund/gui/components/avatar"
-	"github.com/pmenglund/gui/components/badge"
-	"github.com/pmenglund/gui/components/breadcrumbs"
-	"github.com/pmenglund/gui/components/button"
-	"github.com/pmenglund/gui/components/card"
-	"github.com/pmenglund/gui/components/checkbox"
-	"github.com/pmenglund/gui/components/dialog"
-	"github.com/pmenglund/gui/components/dropdownmenu"
-	"github.com/pmenglund/gui/components/emptystate"
-	"github.com/pmenglund/gui/components/formfield"
-	"github.com/pmenglund/gui/components/iconbutton"
-	"github.com/pmenglund/gui/components/input"
-	"github.com/pmenglund/gui/components/navbar"
-	"github.com/pmenglund/gui/components/pagination"
-	"github.com/pmenglund/gui/components/radiogroup"
-	selectui "github.com/pmenglund/gui/components/select"
-	"github.com/pmenglund/gui/components/separator"
-	"github.com/pmenglund/gui/components/sheet"
-	"github.com/pmenglund/gui/components/skeleton"
-	"github.com/pmenglund/gui/components/spinner"
-	switchui "github.com/pmenglund/gui/components/switch"
-	"github.com/pmenglund/gui/components/table"
-	"github.com/pmenglund/gui/components/tabs"
-	"github.com/pmenglund/gui/components/textarea"
-	"github.com/pmenglund/gui/components/toast"
-	public "github.com/pmenglund/gui/htmx"
+	"github.com/pmenglund/goth/components/alert"
+	"github.com/pmenglund/goth/components/avatar"
+	"github.com/pmenglund/goth/components/badge"
+	"github.com/pmenglund/goth/components/breadcrumbs"
+	"github.com/pmenglund/goth/components/button"
+	"github.com/pmenglund/goth/components/card"
+	"github.com/pmenglund/goth/components/checkbox"
+	"github.com/pmenglund/goth/components/dialog"
+	"github.com/pmenglund/goth/components/dropdownmenu"
+	"github.com/pmenglund/goth/components/emptystate"
+	"github.com/pmenglund/goth/components/formfield"
+	"github.com/pmenglund/goth/components/iconbutton"
+	"github.com/pmenglund/goth/components/input"
+	"github.com/pmenglund/goth/components/navbar"
+	"github.com/pmenglund/goth/components/pagination"
+	"github.com/pmenglund/goth/components/radiogroup"
+	selectui "github.com/pmenglund/goth/components/select"
+	"github.com/pmenglund/goth/components/separator"
+	"github.com/pmenglund/goth/components/sheet"
+	"github.com/pmenglund/goth/components/skeleton"
+	"github.com/pmenglund/goth/components/spinner"
+	switchui "github.com/pmenglund/goth/components/switch"
+	"github.com/pmenglund/goth/components/table"
+	"github.com/pmenglund/goth/components/tabs"
+	"github.com/pmenglund/goth/components/textarea"
+	"github.com/pmenglund/goth/components/toast"
+	public "github.com/pmenglund/goth/htmx"
 )
 
 // NewMux returns the showcase HTTP handler rooted at the provided repository path.
@@ -404,7 +404,7 @@ func shell(title, current string, sections ...g.Node) g.Node {
 		h.Head(
 			h.Meta(h.Charset("utf-8")),
 			h.Meta(h.Name("viewport"), h.Content("width=device-width, initial-scale=1")),
-			h.TitleEl(g.Text(title+" • gui showcase")),
+			h.TitleEl(g.Text(title+" • goth showcase")),
 			h.Link(h.Rel("stylesheet"), h.Href("/theme/preset.css")),
 			h.Link(h.Rel("stylesheet"), h.Href("/static/ui.css")),
 			h.Script(h.Src("/vendor/htmx.min.js")),
@@ -416,7 +416,7 @@ func shell(title, current string, sections ...g.Node) g.Node {
 				navbar.Navbar(navbar.Props{
 					Brand: h.Div(
 						h.Class("grid gap-1"),
-						h.Span(h.Class("ui-kicker"), g.Text("gui")),
+						h.Span(h.Class("ui-kicker"), g.Text("goth")),
 						h.Strong(g.Text("Component showcase")),
 					),
 					Items: []navbar.Item{

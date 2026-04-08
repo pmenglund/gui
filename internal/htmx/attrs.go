@@ -3,7 +3,7 @@ package htmx
 import (
 	g "maragu.dev/gomponents"
 
-	public "github.com/pmenglund/gui/htmx"
+	public "github.com/pmenglund/goth/htmx"
 )
 
 // Attrs converts stable HTMX props into gomponents attributes.

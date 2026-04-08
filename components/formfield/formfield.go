@@ -4,13 +4,13 @@ import (
 	g "maragu.dev/gomponents"
 	h "maragu.dev/gomponents/html"
 
-	"github.com/pmenglund/gui/components/fielddescription"
-	"github.com/pmenglund/gui/components/fielderror"
-	"github.com/pmenglund/gui/components/label"
-	public "github.com/pmenglund/gui/htmx"
-	"github.com/pmenglund/gui/internal/a11y"
-	"github.com/pmenglund/gui/internal/render"
-	"github.com/pmenglund/gui/internal/tw"
+	"github.com/pmenglund/goth/components/fielddescription"
+	"github.com/pmenglund/goth/components/fielderror"
+	"github.com/pmenglund/goth/components/label"
+	public "github.com/pmenglund/goth/htmx"
+	"github.com/pmenglund/goth/internal/a11y"
+	"github.com/pmenglund/goth/internal/render"
+	"github.com/pmenglund/goth/internal/tw"
 )
 
 type IDs struct {

@@ -1,4 +1,4 @@
-package gui_test
+package goth_test
 
 import (
 	"go/ast"
@@ -10,8 +10,8 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/pmenglund/gui/examples/showcase/app"
-	"github.com/pmenglund/gui/internal/testutil"
+	"github.com/pmenglund/goth/examples/showcase/app"
+	"github.com/pmenglund/goth/internal/testutil"
 )
 
 func TestShowcaseExampleGoldens(t *testing.T) {

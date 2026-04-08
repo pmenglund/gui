@@ -5,7 +5,7 @@ import (
 	"net/http"
 	"os"
 
-	"github.com/pmenglund/gui/examples/showcase/app"
+	"github.com/pmenglund/goth/examples/showcase/app"
 )
 
 func main() {

@@ -1,5 +1,5 @@
-module github.com/pmenglund/gui
+module github.com/pmenglund/goth
 
 go 1.26.1
 
-require maragu.dev/gomponents v1.2.0 // indirect
+require maragu.dev/gomponents v1.2.0
