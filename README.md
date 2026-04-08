@@ -37,7 +37,27 @@ To get the intended styling and behavior in your own app:
 - Serve `theme/preset.css` on pages that render `goth` components.
 - Build a Tailwind bundle from `assets/ui.css`. The simplest integration today is to copy that file into your app and compile it with a `content` list that includes both your app's Go files and the `goth` component source files you use.
 - Serve `assets/ui.js` if you use interactive components such as `dialog`, `dropdownmenu`, `sheet`, `tabs`, or `toast`.
-- Include HTMX itself only if your app uses the `htmx.Props` helpers.
+- Mount `htmx.Handler()` and render `htmx.Script(htmx.ScriptProps{})` if your app uses the `htmx.Props` helpers.
+
+```go
+package ui
+
+import (
+	"net/http"
+
+	g "maragu.dev/gomponents"
+
+	"github.com/pmenglund/goth/htmx"
+)
+
+func MountAssets(mux *http.ServeMux) {
+	mux.Handle(htmx.ScriptPath, htmx.Handler())
+}
+
+func HeadScripts() g.Node {
+	return htmx.Script(htmx.ScriptProps{})
+}
+```
 
 The runnable showcase in `examples/showcase` is the reference integration. It shows the stylesheet and script wiring, component composition patterns, and HTMX partial-update flows end to end.
 

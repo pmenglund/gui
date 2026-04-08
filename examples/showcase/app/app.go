@@ -36,7 +36,7 @@ import (
 	"github.com/pmenglund/goth/components/tabs"
 	"github.com/pmenglund/goth/components/textarea"
 	"github.com/pmenglund/goth/components/toast"
-	public "github.com/pmenglund/goth/htmx"
+	"github.com/pmenglund/goth/htmx"
 )
 
 // NewMux returns the showcase HTTP handler rooted at the provided repository path.
@@ -46,12 +46,11 @@ func NewMux(root string) http.Handler {
 	staticDir := filepath.Join(root, "examples", "showcase", "static")
 	assetsDir := filepath.Join(root, "assets")
 	themeDir := filepath.Join(root, "theme")
-	vendorDir := filepath.Join(root, "node_modules", "htmx.org", "dist")
 
 	mux.Handle("/static/", http.StripPrefix("/static/", http.FileServer(http.Dir(staticDir))))
 	mux.Handle("/assets/", http.StripPrefix("/assets/", http.FileServer(http.Dir(assetsDir))))
 	mux.Handle("/theme/", http.StripPrefix("/theme/", http.FileServer(http.Dir(themeDir))))
-	mux.Handle("/vendor/", http.StripPrefix("/vendor/", http.FileServer(http.Dir(vendorDir))))
+	mux.Handle(htmx.ScriptPath, htmx.Handler())
 
 	mux.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
 		if r.URL.Path != "/" {
@@ -285,7 +284,7 @@ func HTMXPage() g.Node {
 		cardGrid(
 			sectionCard("Counter refresh", "",
 				button.Button(button.Props{
-					HTMX: public.Props{
+					HTMX: htmx.Props{
 						Get:    "/partials/counter?value=2",
 						Target: "#counter-target",
 						Swap:   "innerHTML",
@@ -303,7 +302,7 @@ func HTMXPage() g.Node {
 							Name:        "email",
 							Placeholder: "you@company.com",
 							DescribedBy: ids.DescriptionID + " email-hint",
-							HTMX: public.Props{
+							HTMX: htmx.Props{
 								Get:     "/partials/validate",
 								Trigger: "keyup changed delay:300ms",
 								Target:  "#email-hint",
@@ -319,7 +318,7 @@ func HTMXPage() g.Node {
 			),
 			sectionCard("Swapped interactive fragment", "",
 				button.Button(button.Props{
-					HTMX: public.Props{
+					HTMX: htmx.Props{
 						Get:    "/partials/overlay-trigger",
 						Target: "#overlay-target",
 						Swap:   "innerHTML",
@@ -371,8 +370,8 @@ func ActivityFragment(page int) g.Node {
 		}),
 		pagination.Pagination(pagination.Props{
 			Items: []pagination.Item{
-				{Label: "1", Href: "#", Current: page == 1, HTMX: public.Props{Get: "/partials/activity?page=1", Target: "#activity-target", Swap: "innerHTML"}},
-				{Label: "2", Href: "#", Current: page == 2, HTMX: public.Props{Get: "/partials/activity?page=2", Target: "#activity-target", Swap: "innerHTML"}},
+				{Label: "1", Href: "#", Current: page == 1, HTMX: htmx.Props{Get: "/partials/activity?page=1", Target: "#activity-target", Swap: "innerHTML"}},
+				{Label: "2", Href: "#", Current: page == 2, HTMX: htmx.Props{Get: "/partials/activity?page=2", Target: "#activity-target", Swap: "innerHTML"}},
 			},
 		}),
 	)
@@ -407,7 +406,7 @@ func shell(title, current string, sections ...g.Node) g.Node {
 			h.TitleEl(g.Text(title+" • goth showcase")),
 			h.Link(h.Rel("stylesheet"), h.Href("/theme/preset.css")),
 			h.Link(h.Rel("stylesheet"), h.Href("/static/ui.css")),
-			h.Script(h.Src("/vendor/htmx.min.js")),
+			htmx.Script(htmx.ScriptProps{}),
 			h.Script(h.Defer(), h.Src("/assets/ui.js")),
 		),
 		h.Body(

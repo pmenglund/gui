@@ -5,6 +5,7 @@
 //
 // To render the components with the intended styling, serve theme/preset.css,
 // build a stylesheet from assets/ui.css, and serve assets/ui.js for interactive
-// components. See the repository README and examples/showcase for a complete
-// integration example.
+// components. If you use HTMX props, mount htmx.Handler and render htmx.Script
+// for the bundled HTMX runtime. See the repository README and examples/showcase
+// for a complete integration example.
 package goth
