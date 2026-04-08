@@ -10,12 +10,14 @@ import (
 	"github.com/pmenglund/goth/internal/tw"
 )
 
+// Item configures a tab trigger and panel.
 type Item struct {
 	Key   string
 	Label string
 	Panel g.Node
 }
 
+// Props configures Tabs rendering.
 type Props struct {
 	ID         string
 	Class      string
@@ -55,6 +57,8 @@ func Tabs(p Props) g.Node {
 			)),
 			h.Role("tab"),
 			h.Aria("controls", panelID),
+			h.Aria("selected", ternary(current, "true", "false")),
+			g.Attr("tabindex", ternary(current, "0", "-1")),
 			h.Data("ui-trigger", ""),
 			h.Data("ui-target", key),
 			g.Text(item.Label),
@@ -62,9 +66,10 @@ func Tabs(p Props) g.Node {
 
 		panels = append(panels, h.Div(
 			h.ID(panelID),
-			h.Class("rounded-[var(--ui-radius)] border bg-[rgb(var(--ui-surface))] p-4"),
+			h.Class(tw.Join("rounded-[var(--ui-radius)] border bg-[rgb(var(--ui-surface))] p-4", tw.When(!current, "hidden"))),
 			h.Role("tabpanel"),
 			h.Aria("labelledby", triggerID),
+			g.If(!current, h.Hidden("hidden")),
 			h.Data("ui-content", ""),
 			h.Data("ui-target", key),
 			item.Panel,
@@ -86,4 +91,11 @@ func Tabs(p Props) g.Node {
 			h.Div(h.Class("grid gap-4"), g.Group(panels)),
 		)...,
 	)
+}
+
+func ternary(ok bool, a, b string) string {
+	if ok {
+		return a
+	}
+	return b
 }

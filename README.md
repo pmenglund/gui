@@ -67,6 +67,10 @@ func ReleaseCard() g.Node {
 
 If your app builds Tailwind CSS, include both your app's Go files and the goth component Go files in the Tailwind `content` list so utilities from both sources are retained. Serve `assets/ui.js` only when you use interactive goth widgets such as `dialog`, `dropdownmenu`, `sheet`, `tabs`, or `toast`.
 
+## Stable IDs
+
+Components that create label, description, or panel relationships derive stable fallback IDs from props such as labels, titles, names, or test IDs. Those generated IDs are deterministic so snapshots stay stable, but they are not a document-wide uniqueness guarantee. Pass explicit `ID` values when rendering repeated components with the same label, title, name, or option values in one document.
+
 ## Showcase
 
 The repository includes a runnable showcase app so you can inspect the component library before wiring it into your own application.

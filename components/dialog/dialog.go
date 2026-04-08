@@ -11,6 +11,7 @@ import (
 	"github.com/pmenglund/goth/internal/tw"
 )
 
+// Props configures Dialog rendering.
 type Props struct {
 	ID          string
 	Class       string
@@ -36,7 +37,7 @@ func Dialog(p Props, children ...g.Node) g.Node {
 
 	content := h.Div(
 		h.Data("ui-content", ""),
-		h.Class("hidden fixed inset-0 z-50 grid place-items-center bg-black/50 p-4"),
+		h.Class(tw.Join(tw.When(!p.Open, "hidden"), "fixed inset-0 z-50 grid place-items-center bg-black/50 p-4")),
 		g.If(!p.Open, h.Hidden("hidden")),
 		h.Button(h.Type("button"), h.Class("absolute inset-0 cursor-default"), g.Attr("data-ui-close", "")),
 		h.Div(

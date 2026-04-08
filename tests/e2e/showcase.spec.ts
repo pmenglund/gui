@@ -57,6 +57,7 @@ test("interactive widgets respond to clicks and keyboard controls", async ({ pag
   await expect(page.getByText("The dialog content stays in place in the DOM and relies on focus restoration instead of portals.")).toBeVisible();
   await page.keyboard.press("Escape");
   await expect(page.getByText("The dialog content stays in place in the DOM and relies on focus restoration instead of portals.")).toBeHidden();
+  await expect(page.getByRole("button", { name: "Open dialog" })).toBeFocused();
 
   await page.getByRole("button", { name: "Quick actions" }).click();
   await expect(page.getByText("View logs")).toBeVisible();
@@ -75,6 +76,34 @@ test("interactive widgets respond to clicks and keyboard controls", async ({ pag
   await expect(page.getByText("This panel uses the right edge of the viewport and the same close affordances.")).toBeVisible();
   await page.keyboard.press("Escape");
   await expect(page.getByText("This panel uses the right edge of the viewport and the same close affordances.")).toBeHidden();
+  await expect(page.getByRole("button", { name: "Open sheet" })).toBeFocused();
+});
+
+test("nested tabs do not mutate child tab state", async ({ page }) => {
+  await page.goto("/");
+  await page.setContent(`
+    <div data-ui-controller="tabs" data-ui-value="outer-a">
+      <button type="button" data-ui-trigger="" data-ui-target="outer-a">Outer A</button>
+      <button type="button" data-ui-trigger="" data-ui-target="outer-b">Outer B</button>
+      <div id="outer-a-panel" data-ui-content="" data-ui-target="outer-a">
+        <div data-ui-controller="tabs" data-ui-value="inner-a">
+          <button type="button" data-ui-trigger="" data-ui-target="inner-a">Inner A</button>
+          <button type="button" data-ui-trigger="" data-ui-target="inner-b">Inner B</button>
+          <div id="inner-a-panel" data-ui-content="" data-ui-target="inner-a">Inner A panel</div>
+          <div id="inner-b-panel" data-ui-content="" data-ui-target="inner-b" hidden class="hidden">Inner B panel</div>
+        </div>
+      </div>
+      <div id="outer-b-panel" data-ui-content="" data-ui-target="outer-b" hidden class="hidden">Outer B panel</div>
+    </div>
+  `);
+  await page.addScriptTag({ path: "assets/ui.js" });
+
+  await page.getByRole("button", { name: "Outer B" }).click();
+
+  await expect(page.locator("#outer-a-panel")).toHaveAttribute("hidden", "hidden");
+  await expect(page.locator("#outer-b-panel")).not.toHaveAttribute("hidden", "hidden");
+  await expect(page.locator("#inner-a-panel")).not.toHaveAttribute("hidden", "hidden");
+  await expect(page.locator("#inner-b-panel")).toHaveAttribute("hidden", "hidden");
 });
 
 test("htmx flows update fragments and swapped overlays stay interactive", async ({ page }) => {

@@ -3,12 +3,28 @@
     return el ? el.closest("[data-ui-controller]") : null;
   }
 
+  function ownedBy(root, el) {
+    return closestController(el) === root;
+  }
+
+  function queryOwned(root, selector) {
+    if (!root) return [];
+    return Array.from(root.querySelectorAll(selector)).filter(function (el) {
+      return ownedBy(root, el);
+    });
+  }
+
+  var focusableSelector = "[autofocus], button, [href], input, select, textarea, [tabindex]:not([tabindex='-1'])";
+
   function contentFor(root) {
-    return root ? root.querySelector("[data-ui-content]") : null;
+    return queryOwned(root, "[data-ui-content]")[0] || null;
   }
 
   function triggerFor(root) {
-    return root ? root.querySelector("[data-ui-trigger]") : null;
+    var trigger = queryOwned(root, "[data-ui-trigger]")[0] || null;
+    if (!trigger) return null;
+    if (trigger.matches(focusableSelector)) return trigger;
+    return trigger.querySelector(focusableSelector) || trigger;
   }
 
   function setState(root, open) {
@@ -41,7 +57,7 @@
     if (!open) {
       var focusTarget = contentFor(root);
       if (focusTarget) {
-        var autoFocus = focusTarget.querySelector("[autofocus], button, [href], input, select, textarea, [tabindex]:not([tabindex='-1'])");
+        var autoFocus = focusTarget.querySelector(focusableSelector);
         if (autoFocus) autoFocus.focus();
       }
     } else {
@@ -52,8 +68,8 @@
 
   function syncTabs(root) {
     if (!root || root.dataset.uiController !== "tabs") return;
-    var buttons = root.querySelectorAll("[data-ui-trigger][data-ui-target]");
-    var panels = root.querySelectorAll("[data-ui-content][data-ui-target]");
+    var buttons = queryOwned(root, "[data-ui-trigger][data-ui-target]");
+    var panels = queryOwned(root, "[data-ui-content][data-ui-target]");
     var active = root.dataset.uiValue || (buttons[0] && buttons[0].dataset.uiTarget) || "";
     buttons.forEach(function (button) {
       var current = button.dataset.uiTarget === active;
@@ -126,7 +142,7 @@
     var root = closestController(event.target);
     if (!root || root.dataset.uiController !== "tabs") return;
 
-    var buttons = Array.from(root.querySelectorAll("[data-ui-trigger][data-ui-target]"));
+    var buttons = queryOwned(root, "[data-ui-trigger][data-ui-target]");
     var index = buttons.indexOf(event.target);
     if (index === -1) return;
 

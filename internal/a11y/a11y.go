@@ -8,6 +8,10 @@ import (
 )
 
 // ID returns the provided id, or a deterministic id derived from the seeds.
+//
+// Generated IDs are stable fallbacks, not document-unique guarantees. Components
+// that create ARIA relationships should pass explicit IDs when duplicate labels,
+// titles, names, or values can appear in the same document.
 func ID(prefix, provided string, seeds ...string) string {
 	if provided != "" {
 		return provided

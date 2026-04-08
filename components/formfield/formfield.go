@@ -13,12 +13,14 @@ import (
 	"github.com/pmenglund/goth/internal/tw"
 )
 
+// IDs contains generated IDs for wiring a form control to its label and helper text.
 type IDs struct {
 	ControlID     string
 	DescriptionID string
 	ErrorID       string
 }
 
+// Props configures FormField rendering.
 type Props struct {
 	ID          string
 	Class       string
@@ -33,6 +35,10 @@ type Props struct {
 }
 
 // FormField renders a labeled form control with optional description and error text.
+//
+// Use Props.Builder when the control should receive generated ID and ARIA wiring.
+// When Builder is nil, variadic children render as-is and callers must provide
+// matching control IDs and aria-describedby attributes themselves.
 func FormField(p Props, children ...g.Node) g.Node {
 	controlID := a11y.ID("field", p.ID, p.Label, p.DataTestID)
 	descriptionID := ""

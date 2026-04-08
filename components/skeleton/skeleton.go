@@ -11,6 +11,7 @@ import (
 	"github.com/pmenglund/goth/internal/tw"
 )
 
+// Props configures Skeleton rendering.
 type Props struct {
 	ID         string
 	Class      string
@@ -25,7 +26,7 @@ type Props struct {
 // Skeleton renders a loading placeholder block.
 func Skeleton(p Props) g.Node {
 	count := p.Count
-	if count == 0 {
+	if count <= 0 {
 		count = 1
 	}
 
